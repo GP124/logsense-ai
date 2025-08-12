@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: gp.observation.analysis@gmail.com
+    password: ezph dgck eevq sibr
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+mail:
+  from: gp.observation.analysis@gmail.com

@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  logsense:
+    build: .
+    container_name: logsense
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    depends_on:
+      - ollama
+    networks:
+      - logsense-net
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./models:/root/.ollama
+    networks:
+      - logsense-net
+
+networks:
+  logsense-net:
+    driver: bridge
