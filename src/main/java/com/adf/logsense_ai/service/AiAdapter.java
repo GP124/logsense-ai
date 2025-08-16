@@ -34,7 +34,7 @@ public class AiAdapter {
             """ + shortLog;
 
             String jsonPayload = mapper.createObjectNode()
-                    .put("model", "gemma:2b-instruct")
+                    .put("model", "gemma")
                     .put("stream", false)
                     .put("prompt", prompt)
                     .toString();

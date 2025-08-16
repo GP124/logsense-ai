@@ -3,26 +3,28 @@ version: '3.8'
 services:
   logsense:
     build: .
-    container_name: logsense
+    container_name: logsense-app
     ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
+      - "8081:8081"
     depends_on:
       - ollama
-    networks:
-      - logsense-net
 
   ollama:
-    image: ollama/ollama
-    container_name: ollama
+    image: ollama/ollama:latest
+    container_name: ollama-service
+    volumes:
+      - ollama_data:/root/.ollama
     ports:
       - "11434:11434"
-    volumes:
-      - ./models:/root/.ollama
-    networks:
-      - logsense-net
+    restart: unless-stopped
+    entrypoint: >
+      sh -c "
+      /bin/ollama serve &
+      sleep 5 &&
+      ollama pull gemma:2b &&
+      ollama cp gemma:2b gemma &&
+      tail -f /dev/null
+      "
 
-networks:
-  logsense-net:
-    driver: bridge
+volumes:
+  ollama_data:
